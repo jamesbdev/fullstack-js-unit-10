@@ -6,8 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-//apply CORS middleware
-app.use(cors());
+
 
 const Sequelize = require('sequelize');
 
@@ -26,6 +25,9 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 
 // create the Express app
 const app = express();
+
+//apply CORS middleware
+app.use(cors());
 
 //declare route files
 app.use("/api/users", userRoutes);
