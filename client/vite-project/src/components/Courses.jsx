@@ -30,7 +30,7 @@ const Courses = (props) => {
     }, [])
 
     const coursesItems = courses.map((course, index) => <Course key={index} title={course.title}/>);
-    //console.log("courses", courses);
+
     return(
         <div>
             <main>
