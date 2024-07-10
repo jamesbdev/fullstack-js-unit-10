@@ -1,4 +1,5 @@
-import { useState } from 'react'
+
+//import CSS files
 import "./global.css";
 import "./reset.css";
 import Header from "./components/Header";

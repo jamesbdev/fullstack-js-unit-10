@@ -4,7 +4,6 @@ import App from './App.jsx'
 import './global.css';
 import './reset.css';
 import { BrowserRouter } from "react-router-dom";
-import Courses from './components/Courses.jsx';
 
 
 
@@ -13,6 +12,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-
   </React.StrictMode>,
 )
