@@ -29,10 +29,10 @@ const Courses = (props) => {
      
     }, [])
 
-    const coursesItems = courses.map((course, index) => <Course key={index} title={course.title}/>);
+    const coursesItems = courses.map((course, index) => <Course key={index} title={course.title} id={course.id} />);
 
     return(
-        <div>
+      
             <main>
                 <div className="wrap main--grid">
                     {/* List of courses */}
@@ -42,7 +42,7 @@ const Courses = (props) => {
                 </div>
             </main>
 
-        </div>
+        
     )
 }
 

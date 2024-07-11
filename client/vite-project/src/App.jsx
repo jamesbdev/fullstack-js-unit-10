@@ -1,9 +1,8 @@
 
-//import CSS files
-import "./global.css";
-import "./reset.css";
+
 import Header from "./components/Header";
 import Courses from './components/Courses';
+import Course from "./components/Course";
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -11,8 +10,8 @@ function App() {
     <>
         <Header />
         <Routes>
-          <Route path="/" element={<Courses />}>
-          </Route>
+          <Route path="/" element={<Courses />}></Route>
+          <Route path="/course:id" element={<Course />}></Route>
         </Routes>
     </>
 
