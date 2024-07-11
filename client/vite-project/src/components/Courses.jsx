@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from 'react';
-import Course from "./Course";
 import AddModule from "./AddModule";
+import CourseCard from "./CourseCard";
 
 /* index page component 
  - Shows a list of courses
@@ -29,7 +29,7 @@ const Courses = (props) => {
      
     }, [])
 
-    const coursesItems = courses.map((course, index) => <Course key={index} title={course.title} id={course.id} />);
+    const coursesItems = courses.map((course, index) => <CourseCard key={index} title={course.title} id={course.id} author={course.author} />);
 
     return(
       
