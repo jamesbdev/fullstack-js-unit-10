@@ -1,33 +1,8 @@
 import React from "react";
-import { useEffect, useState } from "react";
 
 
 /* Component for course detail view */
 const Course = (props) => {
-  //create course state
-  const [course, setCourse] = useState(null);
-  const courseId = props.id;
-  console.log(courseId);
-
-  //make request to get data from specific course
-  useEffect(() => {
-        const getCourseInfo = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/api/courses/:${props.id}`)
-                const courseData = await response.json();
-                setCourse(courseData);
-            } catch (error) {
-              console.log("Error when fetching course details", error);
-            }
-        
-        }
-
-        getCourseInfo();
-
-    }, [])
-
-    console.log(course);
-    if (course !== null) {
         return (
             <>
             <div className="actions--bar">
@@ -73,7 +48,6 @@ const Course = (props) => {
         </div>
         </>
           );
-    }
  
 };
 
