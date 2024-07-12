@@ -3,6 +3,7 @@ import React from "react";
 
 /* Component for course detail view */
 const Course = (props) => {
+    console.log(props.course);
         return (
             <>
             <div className="actions--bar">
@@ -19,15 +20,13 @@ const Course = (props) => {
                  <div>
                      <h3 className="course--detail--title">Course</h3>
                      <h4 className="course--name">Build a Basic Bookcase</h4>
-                     <p>By {course.author}</p>
+                     <p>By {props.course.author}</p>
         
-                     <p>{course.description}</p>
-                     
-                    
+                     <p>{props.course.description}</p>
                  </div>
                  <div>
                      <h3 className="course--detail--title">Estimated Time</h3>
-                     <p>{course.duration}</p>
+                     <p>{props.course.duration}</p>
         
                      <h3 className="course--detail--title">Materials Needed</h3>
                      <ul className="course--detail--list">

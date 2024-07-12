@@ -8,7 +8,7 @@ function App() {
   const { id } = useParams();
   //declare states here
   const [courses, setCourses] = useState([]);
-  const [courseDetails, setCourseDetails] = useState({});
+  const [courseDetails, setCourseDetails] = useState(null);
 
   //make fetch requests here
   const fetchCourses = async () => {
@@ -28,7 +28,7 @@ function App() {
         `http://localhost:5000/api/courses/:${id}`
       );
       const courseData = await response.json();
-      setCourseDetails(courseData);
+      setCourseDetails("current course", courseData);
     } catch (error) {
       console.log("Error when fetching course details", error);
     }
