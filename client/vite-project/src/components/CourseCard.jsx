@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 /* course card that links to individual course */
 const CourseCard = (props) => {
+  console.log("course id", props.id);
     return (
         <>
         <Link to={"/courses/" + props.id} className="course--module course--link">

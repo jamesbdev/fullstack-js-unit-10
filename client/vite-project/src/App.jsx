@@ -9,6 +9,7 @@ function App() {
   return (
     <>
         <Header />
+        {/* Declare routes */}
         <Routes>
           <Route path="/" element={<Courses />}></Route>
           <Route path="/courses/:id" element={<Course />}></Route>
