@@ -1,13 +1,16 @@
 import Header from "./components/Header";
 import Courses from "./components/Courses";
 import Course from "./components/Course";
+import UpdateCourse from "./components/UpdateCourse";
 import { Routes, Route, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+
 function App() {
   const { id } = useParams();
-  //declare states here
+  //add state for courses array
   const [courses, setCourses] = useState([]);
+  //add state for course details
   const [courseDetails, setCourseDetails] = useState(null);
 
   //make fetch requests here
@@ -22,16 +25,22 @@ function App() {
     }
   };
 
+  console.log(id);
+
   const getCourseInfo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/courses/:${id}`
+        `http://localhost:5000/api/courses/1`
       );
       const courseData = await response.json();
-      setCourseDetails("current course", courseData);
+  
+      console.log(courseDetails);
+      //update the course state
+      setCourseDetails(courseData);
     } catch (error) {
       console.log("Error when fetching course details", error);
     }
+
   };
 
   useEffect(() => {
@@ -51,6 +60,7 @@ function App() {
           path="/courses/:id"
           element={<Course course={courseDetails} />}
         ></Route>
+        <Route path="/courses/:id/update" element={<UpdateCourse />}></Route>
       </Routes>
     </>
   );
