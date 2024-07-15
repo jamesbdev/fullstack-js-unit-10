@@ -1,9 +1,10 @@
 import Header from "./components/Header";
 import Courses from "./components/Courses";
-import Course from "./components/Course";
+import CourseDetail from "./components/CourseDetail";
 import UpdateCourse from "./components/UpdateCourse";
 import { Routes, Route, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+
 
 
 function App() {
@@ -58,7 +59,7 @@ function App() {
         <Route path="/" element={<Courses courses={courses} />}></Route>
         <Route
           path="/courses/:id"
-          element={<Course course={courseDetails} />}
+          element={<CourseDetail course={courseDetails} />}
         ></Route>
         <Route path="/courses/:id/update" element={<UpdateCourse />}></Route>
       </Routes>
