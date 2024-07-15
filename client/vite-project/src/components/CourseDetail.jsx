@@ -33,7 +33,7 @@ const CourseDetail = (props) => {
                      <h4 className="course--name">Build a Basic Bookcase</h4>
                      <p>By {props.course[0].author}</p>
         
-                     <p><ReactMarkdown>{description}</ReactMarkdown></p>
+                     <ReactMarkdown>{description}</ReactMarkdown>
                  </div>
                  <div>
                      <h3 className="course--detail--title">Estimated Time</h3>

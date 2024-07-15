@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Courses = (props) => {
   //loop through Courses array and create a CourseCard element
   const coursesItems = props.courses.map((course, index) => (
-    <Link to={"/courses/" + course.id} className="course--module course--link">
+    <Link key={index} to={"/courses/" + course.id} className="course--module course--link">
     <h2 className="course--label">Course</h2>
     <h3 className="course--title">{ course.title }</h3>
     </Link>
