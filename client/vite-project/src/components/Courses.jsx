@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { api } from "../utils/apiHelper";
 
 
 /* index page component 
@@ -8,8 +10,26 @@ import { Link } from "react-router-dom";
 */
 
 const Courses = (props) => {
-  //loop through Courses array and create a CourseCard element
-  const coursesItems = props.courses.map((course, index) => (
+  const [courses, setCourses] = useState([]);
+
+  //get data to show courses
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/courses");
+      const courseData = await response.json();
+      //change state for courses array
+      setCourses(courseData);
+    } catch (error) {
+      console.log("there was an error getting the list of courses", error);
+    }
+  };
+
+  useEffect(() => {
+    //make fetch request
+    fetchCourses();
+  },[]);
+  
+  const coursesItems = courses.map((course, index) => (
     <Link key={index} to={"/courses/" + course.id} className="course--module course--link">
     <h2 className="course--label">Course</h2>
     <h3 className="course--title">{ course.title }</h3>
