@@ -17,7 +17,6 @@ const CourseDetail = (props) => {
           );
           const courseData = await response.json();
       
-          
           //update the course state
           setCourseDetails(courseData);
      

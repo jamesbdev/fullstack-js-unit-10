@@ -4,7 +4,8 @@ import App from './App.jsx'
 import './reset.css';
 import './global.css';
 import { BrowserRouter } from "react-router-dom";
-import { userProvider } from './context/UserContext.jsx';
+import UserProvider  from './context/UserContext';
+import ThemeProvider from './context/ThemeContext';
 
 
 

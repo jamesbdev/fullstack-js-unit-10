@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import ThemeContext from '../context/ThemeContext';
 
 const UserSignUp = () => {
+    const navigate = useNavigate();
     //state
     const name = useRef(null);
     const username = useRef(null);
@@ -23,14 +26,30 @@ const UserSignUp = () => {
             },
             body: JSON.stringify(user),
         }
+        
+        try {
+            const response = await fetch("http://localhost:5000/api/users", fetchOptions);
+
+            if (response.status === 201) {
+              console.log(`${user.username} is successfully signed up and authenticated`);
+            } else if (response.status === 400) {
+                const data = await response.json();
+                setErrors(data.errors)
+            } else {
+                throw new Error();
+            }
+            console.log(response); 
+        } catch (error) {
+            console.log(error);
+            navigate("/error");
+        }
     
-        const response = await fetch("http://localhost:5000/api/users", fetchOptions);
-        console.log(response);
     }
 
 
     const handleCancel = (event) => {
       event.preventDefault();
+      navigate("/");
     }
 
     return (
