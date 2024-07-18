@@ -10,12 +10,18 @@ const Header = (props) => {
                    
                 </h1>
                 <nav>
+                    {/* Check if user is authenticated 
+                      - if Yes show welcome message 
+                      - Display logout button 
+                    - else show sign up and sign in button
+                      */}
                     <ul className="header-signedout">
                         <li>
-                            <a href="sign-up.html">Sign up</a>
+                            <Link to="/sign-up">Sign up</Link>
+                           
                         </li>
                         <li>
-                            <a href="sign-in.html">Sign in</a>
+                            <Link to="/sign-in">Sign in</Link>
                         </li>
                     </ul>
                 </nav>

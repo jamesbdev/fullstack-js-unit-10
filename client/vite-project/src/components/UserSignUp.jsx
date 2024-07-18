@@ -5,19 +5,25 @@ import ThemeContext from '../context/ThemeContext';
 const UserSignUp = () => {
     const navigate = useNavigate();
     //state
-    const name = useRef(null);
-    const username = useRef(null);
+    
+    const firstName = useRef(null);
+    const lastName = useRef(null);
+    const emailAddress = useRef(null);
     const password = useRef(null);
+    //state for errors
     const [errors, setErrors] = useState([]);
     
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const user = {
-            name : name.current.value,
-            username: username.current.value,
+            firstName : firstName.current.value,
+            lastName: lastName.current.value,
+            emailAddress: emailAddress.current.value,
             password: password.current.value
         }
+
+        console.log(user);
 
         const fetchOptions = {
             method: "POST",
@@ -31,14 +37,15 @@ const UserSignUp = () => {
             const response = await fetch("http://localhost:5000/api/users", fetchOptions);
 
             if (response.status === 201) {
-              console.log(`${user.username} is successfully signed up and authenticated`);
+            //user has been signed up  
+              console.log(`${user.emailAddress} is successfully signed up and authenticated`);
             } else if (response.status === 400) {
                 const data = await response.json();
+                //set error state 
                 setErrors(data.errors)
             } else {
                 throw new Error();
             }
-            console.log(response); 
         } catch (error) {
             console.log(error);
             navigate("/error");
@@ -56,16 +63,18 @@ const UserSignUp = () => {
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
-                <form>
+                { errors ? <h3> ${errors}</h3> : null}
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="firstName">First Name</label>
-                    <input id="firstName" name="firstName" type="text" value=""/>
+                    <input ref={firstName} id="firstName" name="firstName" type="text"/>
                     <label htmlFor="lastName">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" value=""/>
+                    <input ref={lastName} id="lastName" name="lastName" type="text"/>
                     <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" value=""/>
+                    <input ref={emailAddress} id="emailAddress" name="emailAddress" type="email"/>
                     <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" value=""/>
-                    <button className="button" type="submit">Sign Up</button><button className="button button-secondary" onClick="">Cancel</button>
+                    <input ref={password} id="password" name="password" type="password"/>
+                    <button className="button" type="submit">Sign Up</button>
+                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 </form>
                 <p>Already have a user account? Click here to <a href="sign-in.html">sign in</a>!</p>
             </div>

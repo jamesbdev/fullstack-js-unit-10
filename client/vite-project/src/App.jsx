@@ -5,12 +5,14 @@ import UpdateCourse from "./components/UpdateCourse";
 import { Routes, Route, useParams } from "react-router-dom";
 import { useContext } from "react";
 import NotFound from "./components/NotFound";
+import UserSignIn from "./components/UserSignIn";
+import UserSignUp from "./components/UserSignUp";
+import Error from "./components/Error";
 
 
 function App() {
   const { id } = useParams();
-
-
+  
   return (
     <>
       <Header />
@@ -22,6 +24,9 @@ function App() {
           element={<CourseDetail/>}
         ></Route>
         <Route path="/courses/:id/update" element={<UpdateCourse />}></Route>
+        <Route path="/sign-up" element={<UserSignUp/>}></Route>
+        <Route path="/sign-in" element={<UserSignIn/>}></Route>
+        <Route path="/error" element={<Error/>}></Route>
         <Route path="*" element={<NotFound/>}></Route>
       </Routes>
     </>

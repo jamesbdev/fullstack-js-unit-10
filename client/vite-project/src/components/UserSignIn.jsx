@@ -1,7 +1,13 @@
 import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
-const UserSignIn = () => {
+
+const UserSignIn = (credentials) => {
+  const navigate = useNavigate();
+  const username = useRef(null);
+  const password = useRef(null);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -22,14 +28,23 @@ const UserSignIn = () => {
     };
 
     try {
+      //TODO: Get user from UserContext
+        //success (user !== null) -> navigate to authenticated route
+        //Failure (user == null) -> update errors state 
+
       const response = await fetch("http://localhost:5000/user", fetchOptions);
-      console.log(response);
       if (response.status === 200) {
         const user = await response.json();
-        console.log(`Success! ${user.username} is now signed in!`);
-        navigate("/authenticated");
+        if (user) {
+            navigate("/authenticated")
+        } else {
+            setErrors(["Sign in was unsuccessful"])
+        }
+        setAuthUser(user);
+        return;
+      
       } else if (response.status === 401) {
-        setErrors(["Sign in was unsuccessful"]);
+        return null;
       } else {
         throw new Error();
       }
@@ -40,29 +55,31 @@ const UserSignIn = () => {
   };
 
   const handleCancel = (event) => {
+    //prevent form from submitting
     event.preventDefault;
+    //go back to home page
     navigate("/");
   };
+  //return mark-up
   return (
     <main>
-      <div class="form--centered">
+      <div className="form--centered">
         <h2>Sign In</h2>
-
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="emailAddress">Email Address</label>
-          <input id="emailAddress" name="emailAddress" type="email" value="" />
+          <input ref={username} id="emailAddress" name="emailAddress" type="email" />
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" value="" />
-          <button class="button" type="submit">
+          <input ref={password} id="password" name="password" type="password"/>
+          <button className="button" type="submit">
             Sign In
           </button>
-          <button class="button button-secondary" onClick="">
+          <button className="button button-secondary" onClick={handleCancel}>
             Cancel
           </button>
         </form>
         <p>
           Don't have a user account? Click here to{" "}
-          <a href="sign-up.html">sign up</a>!
+          <Link to="/sign-up">sign up</Link>!
         </p>
       </div>
     </main>
