@@ -1,51 +1,64 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateCourse = (props) => {
-  
   const courseTitle = useRef(null);
   const courseDescription = useRef(null);
   const estimatedTime = useRef(null);
   const materialsNeeded = useRef(null);
-  const errors = useState(null);
+  //add error state
+  const [errors, setErrors] = useState(null);
+  const navigate = useNavigate();
+  
+ // store logged in user name as 'author' 
+  const author = "Tom Jones";
 
   const handleSubmit = async (event) => {
+    //prevent form submission
     event.preventDefault();
 
     const fetchOptions = {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+    },
       body: {
-        courseTitle,
-        courseDescription,
-        estimatedTime,
-        materialsNeeded,
+        courseTitle: courseTitle,
+        description: courseDescription,
+        estimatedTime: estimatedTime,
+        materialsNeeded: materialsNeeded,
+        author: author
       },
     };
 
-    //make POST request to /api/courses
-    //pass in the body of request
-    // user id
-    // course title
-    //description
-    //estimated time
-    //materials needed
-    //redirect to /courses
-
+    //POST request to create course
     try {
       const response = await fetch(
         "http://localhost:5000/api/courses",
         fetchOptions
       );
-      const data = response.json();
+ 
+
+      if (response.status === 201) {
+        console.log("course was created");
+        //redirect to courses page
+        navigate("/");
+      } else if (response.status === 400 || response.status === 401) {
+        const data = await response.json();
+        //set error state
+        setErrors(data.errors);
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       console.log("There was an error creating a course", error);
     }
-
-    //redirect to /courses
   };
 
+  //redirect to homepage
   const handleCancel = (event) => {
     event.preventDefault();
-    //redirect to homepage
+    navigate("/");
   };
   return (
     <>
@@ -53,12 +66,18 @@ const CreateCourse = (props) => {
         <div className="wrap">
           <h2>Create Course</h2>
           {/* -check for errors, if errors display errors */}
-          <div className="validation--errors">
-            <h3>Validation Errors</h3>
-            <ul>
-             {/* loop through errors */}
-            </ul>
-          </div>
+          {errors ? (
+            <div className="validation--errors">
+              <h3>Validation Errors</h3>
+              <ul>
+                {/* loop through errors */}
+                {errors.map((error, index) => (
+                  <li key={index}>{ error }</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
           <form onSubmit={handleSubmit}>
             <div className="main--flex">
               <div>
@@ -70,7 +89,7 @@ const CreateCourse = (props) => {
                   type="text"
                 />
 
-                <p>By Joe Smith</p>
+                <p> By logged in user </p>
 
                 <label htmlFor="courseDescription">Course Description</label>
                 <textarea

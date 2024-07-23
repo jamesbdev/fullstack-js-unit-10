@@ -31,7 +31,7 @@ function App() {
         <Route path="/sign-up" element={<UserSignUp/>}></Route>
         <Route path="/sign-in" element={<UserSignIn/>}></Route>
         <Route path="/error" element={<Error/>}></Route>
-        <Route path="/create-course" element={<CreateCourse />}></Route>
+        <Route path="/create" element={<CreateCourse />}></Route>
         <Route path="*" element={<NotFound/>}></Route>
       </Routes>
 

@@ -15,10 +15,10 @@ const CourseDetail = (props) => {
           const response = await fetch(
             `http://localhost:5000/api/courses/${id}`
           );
-          const courseData = await response.json();
+          const data = await response.json();
       
           //update the course state
-          setCourseDetails(courseData);
+          setCourseDetails(data);
      
         } catch (error) {
           console.log("Error when fetching course details", error);
@@ -35,16 +35,18 @@ const CourseDetail = (props) => {
             <h2>Loading...</h2>
         );
     } else {
+      console.log("course details", courseDetails);
       //assign course data to variables
       const { description, materialsNeeded, author, estimatedTime } = courseDetails[0];
+    
       const userName = courseDetails[0].user.firstName + " " + courseDetails[0].user.lastName;
         return (
             <>
             <div className="actions--bar">
             <div className="wrap">
                 <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                <a className="button" href="#">Delete Course</a>
-                <a className="button button-secondary" href="index.html">Return to List</a>
+                <Link className="button" to={`/courses/${id}delete`}>Delete Course</Link>
+                <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
         </div>
          <div className="wrap">

@@ -1,3 +1,5 @@
+//helper function for API calls
+
 export const api = async (path, method = "GET", body = null, credentials = null) => {
   const url = "http://localhost:5000/api" + path;
 
