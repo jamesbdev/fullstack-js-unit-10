@@ -4,10 +4,14 @@ import UserContext from "../context/UserContext";
 import UserProvider from "../context/UserContext";
 import { useAuth } from "../context/UserContext";
 
+
 const Header = (props) => {
+
+  //const { user } = useContext(UserContext);
   
   const signOut = () => {
     console.log("Sign Out");
+    user.signOut();
   }
 
   return (
@@ -22,7 +26,7 @@ const Header = (props) => {
                       - Display logout button 
                     - else show sign up and sign in button
                       */}
-          {useAuth === null ? (
+          { useAuth === null ? (
             <>
               <ul className="header-signedout">
                 <li>
@@ -35,10 +39,10 @@ const Header = (props) => {
             </>
           ) : (
             <ul className="header--signedin">
-              <li>Welcome, Joe Smith!</li>
+              <li>Welcome firstName lastName </li>
               <li>
                 {/* - onClick call signOut function */}
-                <Link to={"/"} onClick={console.log("sign out")}>Sign out</Link>
+                <Link to={"/"} onClick={signOut}>Sign out</Link>
               </li>
             </ul>
           )}

@@ -3,13 +3,13 @@ import { createContext, useContext, useState } from "react";
 //create user context for authentication
 const AuthContext = createContext(null);
 
-
+//hook to use AuthContext
 export const useAuth = () => useContext(AuthContext);
 
 
 //main context provider for user authentication
-const UserProvider = ({children}) => {
-  
+const UserContext = ({children}) => {
+    //state of authorized user
     const [authUser, setAuthUser] = useState(null);
 
 
@@ -23,7 +23,7 @@ const UserProvider = ({children}) => {
     //Sign out function to pass to UserSignOut component
     const signOut = () => {
         //remove authenticated user information from the global state
-      setAuthUser({username, password});
+      setAuthUser(null);
     };
 
     return (
@@ -39,5 +39,5 @@ const UserProvider = ({children}) => {
     )
 }
 
-export default UserProvider;
+export default UserContext;
 

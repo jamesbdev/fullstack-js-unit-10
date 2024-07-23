@@ -1,17 +1,32 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeContext from '../context/ThemeContext';
+//import user authentication context
+import AuthContext from '../context/UserContext';
+
+import { useAuth } from '../context/UserContext';
 
 const UserSignUp = () => {
     const navigate = useNavigate();
-    //state
-    
     const firstName = useRef(null);
     const lastName = useRef(null);
     const emailAddress = useRef(null);
     const password = useRef(null);
     //state for errors
     const [errors, setErrors] = useState([]);
+    
+    const signIn = useContext(AuthContext);
+
+    console.log(signIn);
+    //sign in user
+    //useAuth(emailAddress, password);
+
+    /* function to create a user 
+
+    - gets user data from input refs
+    - makes a POST request to /api/users 
+    - pass in user credentials in body 
+    */
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -24,6 +39,7 @@ const UserSignUp = () => {
         }
 
         console.log(user);
+        
 
         const fetchOptions = {
             method: "POST",
@@ -32,13 +48,17 @@ const UserSignUp = () => {
             },
             body: JSON.stringify(user),
         }
-        
+
+     
         try {
             const response = await fetch("http://localhost:5000/api/users", fetchOptions);
 
             if (response.status === 201) {
             //user has been signed up  
               console.log(`${user.emailAddress} is successfully signed up and authenticated`);
+              //sign in user
+              //use context hook to access sign in function 
+              //signInUser(emailAddress, password);
             } else if (response.status === 400) {
                 const data = await response.json();
                 //set error state 
@@ -53,6 +73,7 @@ const UserSignUp = () => {
     
     }
 
+ /* Cancel and return to homepage */
 
     const handleCancel = (event) => {
       event.preventDefault();
@@ -63,7 +84,7 @@ const UserSignUp = () => {
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
-                { errors ? <h3> ${errors}</h3> : null}
+                { errors ? <h3>{errors}</h3> : null}
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="firstName">First Name</label>
                     <input ref={firstName} id="firstName" name="firstName" type="text"/>

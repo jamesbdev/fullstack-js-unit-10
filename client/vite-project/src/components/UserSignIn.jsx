@@ -14,13 +14,13 @@ const UserSignIn = (credentials) => {
   //authenticated user state
   const [authUser, setAuthUser] = useState(null);
 
-
   //submit user sign in form 
     //gets user credentials from refs
     //puts credentials into encoded format
     //makes GET request to api/users passing in credentials in authorization headers
 
   const handleSubmit = async (event) => {
+    //prevent form submitting
     event.preventDefault();
 
     const credentials = {
