@@ -1,21 +1,40 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 //create user context for authentication
-const AuthContext = createContext(null);
-
-//hook to use AuthContext
-export const useAuth = () => useContext(AuthContext);
-
+const UserContext = createContext(null);
 
 //main context provider for user authentication
-const UserContext = ({children}) => {
+export const UserProvider = ({children}) => {
     //state of authorized user
     const [authUser, setAuthUser] = useState(null);
 
 
     //sign in function to pass to UserSignIn component
-    const signIn = async (username, password) => {
-       setAuthUser({ username, password });
+    const signIn = async (credentials) => {
+
+        const encodedCredentials = btoa(
+            `${credentials.username}:${credentials.password}`
+          );
+      
+      
+          const fetchOptions = {
+            method: "GET",
+            headers: {
+              Authorization: `Basic ${encodedCredentials}`,
+            },
+          };
+      
+        //fetch request 
+       const response = await fetch("http://localhost:5000/api/users", fetchOptions);
+      if (response.status === 200) {
+        const user = await response.json();
+        setAuthUser(user);
+        return user;
+      } else if (response.status === 401) {
+        return null;
+      } else {
+        throw new Error();
+      }
       
     }
 
@@ -27,7 +46,7 @@ const UserContext = ({children}) => {
     };
 
     return (
-        <AuthContext.Provider value={{
+        <UserContext.Provider value={{
             authUser,
             actions: {
                 signIn,
@@ -35,7 +54,7 @@ const UserContext = ({children}) => {
             }
             }}>
             {children}
-        </AuthContext.Provider>
+        </UserContext.Provider>
     )
 }
 

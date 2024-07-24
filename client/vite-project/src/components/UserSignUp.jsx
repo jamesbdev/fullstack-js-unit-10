@@ -4,8 +4,6 @@ import ThemeContext from '../context/ThemeContext';
 //import user authentication context
 import AuthContext from '../context/UserContext';
 
-import { useAuth } from '../context/UserContext';
-
 const UserSignUp = () => {
     const navigate = useNavigate();
     const firstName = useRef(null);

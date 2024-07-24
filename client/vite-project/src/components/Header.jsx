@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import UserProvider from "../context/UserContext";
-import { useAuth } from "../context/UserContext";
+
 
 
 const Header = (props) => {
@@ -26,7 +26,7 @@ const Header = (props) => {
                       - Display logout button 
                     - else show sign up and sign in button
                       */}
-          { useAuth === null ? (
+          { true ? (
             <>
               <ul className="header-signedout">
                 <li>

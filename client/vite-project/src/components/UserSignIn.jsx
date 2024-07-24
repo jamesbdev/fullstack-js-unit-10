@@ -1,10 +1,11 @@
 import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import { useAuth } from '../context/UserContext';
-
+import  UserContext from "../context/UserContext";
 
 const UserSignIn = (credentials) => {
+  //get context from UserContext
+  const { actions } = useContext(UserContext);
+  
   const navigate = useNavigate();
   //ref to get credentials from form inputs
   const username = useRef(null);
@@ -13,11 +14,7 @@ const UserSignIn = (credentials) => {
   const { signIn } = useAuth();
   //authenticated user state
   const [authUser, setAuthUser] = useState(null);
-
-  //submit user sign in form 
-    //gets user credentials from refs
-    //puts credentials into encoded format
-    //makes GET request to api/users passing in credentials in authorization headers
+  const [errors, setErrors] = useState(null);
 
   const handleSubmit = async (event) => {
     //prevent form submitting
@@ -28,11 +25,9 @@ const UserSignIn = (credentials) => {
       password: password.current.value,
     };
 
-
     const encodedCredentials = btoa(
       `${credentials.username}:${credentials.password}`
     );
-
 
     const fetchOptions = {
       method: "GET",
@@ -42,26 +37,17 @@ const UserSignIn = (credentials) => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/users", fetchOptions);
-      if (response.status === 200) {
-        const user = await response.json();
-        if (user) {
-            navigate("/authenticated")
-        } else {
-            setErrors(["Sign in was unsuccessful"])
-        }
-        //set state of authenticated user
-        setAuthUser(user);
-        return;
-      
-      } else if (response.status === 401) {
-        //unauthorized
-        return null;
+      const user = await actions.signIn(credentials);
+      if (user) {
+        navigate("/authenticated");
       } else {
-        throw new Error();
+        setErrors(["Sign in was unsuccessful"]);
       }
     } catch (error) {
       console.log(error);
+      //set error state
+      setErrors(error);
+      //navigate to /error route
       navigate("/error");
     }
   };
@@ -72,16 +58,21 @@ const UserSignIn = (credentials) => {
     //go back to home page
     navigate("/");
   };
-  //return mark-up
+
   return (
     <main>
       <div className="form--centered">
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="emailAddress">Email Address</label>
-          <input ref={username} id="emailAddress" name="emailAddress" type="email" />
+          <input
+            ref={username}
+            id="emailAddress"
+            name="emailAddress"
+            type="email"
+          />
           <label htmlFor="password">Password</label>
-          <input ref={password} id="password" name="password" type="password"/>
+          <input ref={password} id="password" name="password" type="password" />
           <button className="button" type="submit">
             Sign In
           </button>

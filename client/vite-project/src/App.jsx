@@ -11,31 +11,24 @@ import Error from "./components/Error";
 import UserContext from "./context/UserContext";
 import CreateCourse from "./components/CreateCourse";
 
-
 function App() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [user, setUser] = useState(null);
-  
+
   return (
     <>
-   
-    <Header />
+      <Header />
       {/* Declare routes */}
       <Routes>
-        <Route path="/" element={<Courses/>}></Route>
-        <Route
-          path="/courses/:id"
-          element={<CourseDetail/>}
-        ></Route>
+        <Route path="/" element={<Courses />}></Route>
+        <Route path="/courses/:id" element={<CourseDetail />}></Route>
         <Route path="/courses/:id/update" element={<UpdateCourse />}></Route>
-        <Route path="/sign-up" element={<UserSignUp/>}></Route>
-        <Route path="/sign-in" element={<UserSignIn/>}></Route>
-        <Route path="/error" element={<Error/>}></Route>
-        <Route path="/create" element={<CreateCourse />}></Route>
-        <Route path="*" element={<NotFound/>}></Route>
+        <Route path="/sign-up" element={<UserSignUp />}></Route>
+        <Route path="/sign-in" element={<UserSignIn />}></Route>
+        <Route path="/error" element={<Error />}></Route>
+        <Route exact path="/courses/create" element={<CreateCourse />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
-
-     
     </>
   );
 }
