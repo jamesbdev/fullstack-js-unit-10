@@ -1,6 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import ThemeContext from '../context/ThemeContext';
 //import user authentication context
 import { UserContext } from '../context/UserContext';
 

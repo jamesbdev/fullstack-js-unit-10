@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
-
-
+import { UserContext } from "../context/UserContext";
 
 
 const Header = (props) => {
+  const { actions, authUser } = useContext(UserContext);
 
   //const { user } = useContext(UserContext);
   
   const signOut = () => {
-    console.log("Sign Out");
-    user.signOut();
+     actions.signOut();
+     console.log("user has been signed out");
   }
+
+
+  //logged in user
+  console.log("logged in user:", authUser);
 
   return (
     <header>
@@ -25,7 +29,7 @@ const Header = (props) => {
                       - Display logout button 
                     - else show sign up and sign in button
                       */}
-          { true ? (
+          { !authUser ? (
             <>
               <ul className="header-signedout">
                 <li>
@@ -38,7 +42,7 @@ const Header = (props) => {
             </>
           ) : (
             <ul className="header--signedin">
-              <li>Welcome firstName lastName </li>
+              <li>Welcome  {authUser.user.firstName } {authUser.user.lastName}</li>
               <li>
                 {/* - onClick call signOut function */}
                 <Link to={"/"} onClick={signOut}>Sign out</Link>

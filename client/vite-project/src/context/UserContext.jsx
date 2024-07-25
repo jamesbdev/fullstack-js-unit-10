@@ -58,6 +58,6 @@ const UserProvider = ({children}) => {
     )
 }
 
-export {UserProvider, UserContext};
+export { UserProvider, UserContext };
 
 
