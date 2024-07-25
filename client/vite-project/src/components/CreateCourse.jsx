@@ -1,7 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const CreateCourse = (props) => {
+  //get logged in user from context
+  const { authUser } = useContext(UserContext);
   const courseTitle = useRef(null);
   const courseDescription = useRef(null);
   const estimatedTime = useRef(null);
@@ -9,9 +12,7 @@ const CreateCourse = (props) => {
   //add error state
   const [errors, setErrors] = useState(null);
   const navigate = useNavigate();
-  
- // store logged in user name as 'author' 
-  const author = "Tom Jones";
+
 
   const handleSubmit = async (event) => {
     //prevent form submission
@@ -27,7 +28,7 @@ const CreateCourse = (props) => {
         description: courseDescription,
         estimatedTime: estimatedTime,
         materialsNeeded: materialsNeeded,
-        author: author
+        userId: authUser.user.id,
       },
     };
 
@@ -88,8 +89,10 @@ const CreateCourse = (props) => {
                   name="courseTitle"
                   type="text"
                 />
-
-                <p> By logged in user </p>
+               { authUser ? ( 
+                <p> By {authUser.user.firstName} {authUser.user.lastName} </p>
+                ) : null }
+               
 
                 <label htmlFor="courseDescription">Course Description</label>
                 <textarea
