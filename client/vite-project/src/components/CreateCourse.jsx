@@ -23,13 +23,13 @@ const CreateCourse = (props) => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
     },
-      body: {
-        courseTitle: courseTitle,
+      body: JSON.stringify({
+        title: courseTitle,
         description: courseDescription,
         estimatedTime: estimatedTime,
         materialsNeeded: materialsNeeded,
         userId: authUser.user.id,
-      },
+      }),
     };
 
     //POST request to create course
