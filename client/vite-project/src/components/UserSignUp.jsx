@@ -2,7 +2,8 @@ import React, { useRef, useState, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeContext from '../context/ThemeContext';
 //import user authentication context
-import AuthContext from '../context/UserContext';
+import { UserContext } from '../context/UserContext';
+
 
 const UserSignUp = () => {
     const navigate = useNavigate();
@@ -10,14 +11,11 @@ const UserSignUp = () => {
     const lastName = useRef(null);
     const emailAddress = useRef(null);
     const password = useRef(null);
+    //access UserContext methods
+    const { actions } = useContext(UserContext);
     //state for errors
     const [errors, setErrors] = useState([]);
     
-    const signIn = useContext(AuthContext);
-
-    console.log(signIn);
-    //sign in user
-    //useAuth(emailAddress, password);
 
     /* function to create a user 
 
@@ -36,8 +34,10 @@ const UserSignUp = () => {
             password: password.current.value
         }
 
-        console.log(user);
-        
+        const credentials = {
+            username: emailAddress.current.value,
+            password: password.current.value
+        }      
 
         const fetchOptions = {
             method: "POST",
@@ -55,8 +55,8 @@ const UserSignUp = () => {
             //user has been signed up  
               console.log(`${user.emailAddress} is successfully signed up and authenticated`);
               //sign in user
-              //use context hook to access sign in function 
-              //signInUser(emailAddress, password);
+              actions.signIn(credentials);
+    
             } else if (response.status === 400) {
                 const data = await response.json();
                 //set error state 

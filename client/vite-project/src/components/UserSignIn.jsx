@@ -1,17 +1,17 @@
 import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import  UserContext from "../context/UserContext";
+import  { UserContext } from "../context/UserContext";
+
 
 const UserSignIn = (credentials) => {
   //get context from UserContext
   const { actions } = useContext(UserContext);
-  
+
   const navigate = useNavigate();
   //ref to get credentials from form inputs
   const username = useRef(null);
   const password = useRef(null);
-  //access signIn method from UserContext
-  const { signIn } = useAuth();
+
   //authenticated user state
   const [authUser, setAuthUser] = useState(null);
   const [errors, setErrors] = useState(null);

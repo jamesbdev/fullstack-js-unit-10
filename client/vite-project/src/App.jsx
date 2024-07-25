@@ -8,7 +8,7 @@ import NotFound from "./components/NotFound";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import Error from "./components/Error";
-import UserContext from "./context/UserContext";
+import { UserContext } from "./context/UserContext";
 import CreateCourse from "./components/CreateCourse";
 
 function App() {

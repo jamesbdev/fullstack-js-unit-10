@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 const UserContext = createContext(null);
 
 //main context provider for user authentication
-export const UserProvider = ({children}) => {
+const UserProvider = ({children}) => {
     //state of authorized user
     const [authUser, setAuthUser] = useState(null);
 
@@ -58,5 +58,6 @@ export const UserProvider = ({children}) => {
     )
 }
 
-export default UserContext;
+export {UserProvider, UserContext};
+
 
