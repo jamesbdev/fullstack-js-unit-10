@@ -18,16 +18,21 @@ const CreateCourse = (props) => {
     //prevent form submission
     event.preventDefault();
 
+    console.log('courseTitle:', courseTitle.current.value);
+    console.log('courseDescription:', courseDescription.current.value);
+    console.log('estimatedTime:', estimatedTime.current.value);
+    console.log('materialsNeeded:', materialsNeeded.current.value);
+    console.log('authUser:', authUser.user.id);
     const fetchOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
     },
       body: JSON.stringify({
-        title: courseTitle,
-        description: courseDescription,
-        estimatedTime: estimatedTime,
-        materialsNeeded: materialsNeeded,
+        title: courseTitle.current.value,
+        description: courseDescription.current.value,
+        estimatedTime: estimatedTime.current.value,
+        materialsNeeded: materialsNeeded.current.value,
         userId: authUser.user.id,
       }),
     };
