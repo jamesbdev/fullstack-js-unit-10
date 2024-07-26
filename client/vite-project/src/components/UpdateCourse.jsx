@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
@@ -7,18 +7,31 @@ const UpdateCourse = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const context = useContext(UserContext);
+  //course state
+  const [course, setCourse] = useState(null);
+  const [courseDesc, setCourseDesc] = useState(null);
 
   //make GET request to /api/courses/:id to get data from the course being updated 
   const getCourseData = async () => {
-    const response = await fetch(`http://localhost:5000/courses/${id}`);
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await fetch(`http://localhost:5000/api/courses/${id}`);
+      const data = await response.json();
+      //console.log("data", data[0]);
+
+      //set course date to course object
+      setCourse(data[0]);
+      console.log("course", course);
+
+    } catch (error) {
+      console.log("there was an error fetching the course data", error);
+    }
+ 
   }
 
   //using hook to update view with course data
   useEffect(()=> {
     getCourseData();
-  })
+  }, [id])
 
   const handleSubmit = (event) => {
     event.preventDefault;
@@ -27,8 +40,6 @@ const UpdateCourse = () => {
     //fetch options
 
     //make PUT request to update the course 
-
-
   }
 
   const handleCancel = (event) => {
