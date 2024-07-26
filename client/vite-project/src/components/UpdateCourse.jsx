@@ -10,6 +10,7 @@ const UpdateCourse = () => {
   //course state
   const [course, setCourse] = useState(null);
   const [courseDesc, setCourseDesc] = useState(null);
+  const [materialsNeeded, setMaterials] = useState(null);
 
   //make GET request to /api/courses/:id to get data from the course being updated 
   const getCourseData = async () => {
@@ -18,6 +19,10 @@ const UpdateCourse = () => {
       const data = await response.json();
       //set course date to course object
       setCourse(data[0]);
+      //set state for materials needed
+      setMaterials(data[0].materialsNeeded);
+      //set state for course description
+      setCourseDesc(data[0].description);
       //console.log("course", course);
     } catch (error) {
       console.log("there was an error fetching the course data", error);
@@ -44,7 +49,7 @@ const UpdateCourse = () => {
     navigate(`/api/courses/${id}`);
 
   }
-
+//check if course exists before showing mark up
   if (!course) {
      return (
       <p>loading course...</p>
@@ -52,30 +57,29 @@ const UpdateCourse = () => {
   } else {
   return(
     <main>
-    <div class="wrap">
+    <div className="wrap">
         <h2>Update Course</h2>
         <form onSubmit={handleSubmit}>
-            <div class="main--flex">
-              {console.log("course", course)}
+            <div className="main--flex">
                 <div>
                     <label htmlFor="courseTitle">Course Title</label>
                     <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title}/>
 
-                    <p>By Joe Smith</p>
+                    <p>By {course.user.firstName} {course.user.lastName}</p>
 
                     <label htmlFor="courseDescription">Course Description</label>
-                    <textarea id="courseDescription" name="courseDescription">{course.description}</textarea>
+                    <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={(event) => setCourseDesc(event.target.value)}></textarea>
                 </div>
                 <div>
                     <label htmlFor="estimatedTime">Estimated Time</label>
                     <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime}/>
 
                     <label htmlFor="materialsNeeded">Materials Needed</label>
-                    <textarea id="materialsNeeded" name="materialsNeeded">* 1/2 x 3/4 inch parting strip&#13;&#13;* 1 x 2 common pine&#13;&#13;* 1 x 4 common pine&#13;&#13;* 1 x 10 common pine&#13;&#13;* 1/4 inch thick lauan plywood&#13;&#13;* Finishing Nails&#13;&#13;* Sandpaper&#13;&#13;* Wood Glue&#13;&#13;* Wood Filler&#13;&#13;* Minwax Oil Based Polyurethane</textarea>
+                    <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded} onChange={(event) => setMaterials(event.target.value) }></textarea>
                 </div>
             </div>
-            <button class="button" type="submit">Update Course</button>
-            <button class="button button-secondary" onClick={handleCancel}>Cancel</button>
+            <button className="button" type="submit">Update Course</button>
+            <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
         </form>
     </div>
 </main>
