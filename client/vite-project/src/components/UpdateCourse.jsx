@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
@@ -6,11 +6,19 @@ const UpdateCourse = () => {
   //get course id from params
   const { id } = useParams();
   const navigate = useNavigate();
-  const context = useContext(UserContext);
+  //store authenticated user from context
+  const { authUser } = useContext(UserContext);
+  console.log(authUser);
   //course state
   const [course, setCourse] = useState(null);
   const [courseDesc, setCourseDesc] = useState(null);
   const [materialsNeeded, setMaterials] = useState(null);
+
+  //get values from form
+  const title = useRef(null);
+  const estimatedTime = useRef(null);
+
+  
 
   //make GET request to /api/courses/:id to get data from the course being updated 
   const getCourseData = async () => {
@@ -35,13 +43,49 @@ const UpdateCourse = () => {
     getCourseData();
   }, [id])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault;
-    console.log("form submitted");
+    //pass credentials for authorization
+    const userEmail = authUser.user.emailAddress;
+    const userPassword = authUser.user.password;
 
-    //fetch options
+    const encodedCredentials = btoa(`${userEmail}:${userPassword}`);
+
+    const fetchOptions = {
+      method: "PUT",
+      headers: {
+        "Authorization": `Basic ${encodedCredentials}`,
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        id,
+        title,
+        description: courseDesc,
+        materialsNeeded,
+        estimatedTime,
+        userId,
+      })
+    }
 
     //make PUT request to update the course 
+    try {
+      const response = await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions);
+      const data = await response.json();
+      console.log("data", data);
+      if (response.status === 200) {
+        //course has been updated
+        //redirect to course details page
+        console.log("course was updated", data);
+       // navigate(`/courses/${id}`);
+      } else if (response.status === 401) {
+        console.log("access denied");
+      } else {
+        throw Error = new Error();
+      }
+
+    } catch (error) {
+      console.log("There was an error when updating the course", error);
+    }
   }
 
   const handleCancel = (event) => {
@@ -63,7 +107,7 @@ const UpdateCourse = () => {
             <div className="main--flex">
                 <div>
                     <label htmlFor="courseTitle">Course Title</label>
-                    <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title}/>
+                    <input ref={title} id="courseTitle" name="courseTitle" type="text" defaultValue={course.title}/>
 
                     <p>By {course.user.firstName} {course.user.lastName}</p>
 
@@ -72,7 +116,7 @@ const UpdateCourse = () => {
                 </div>
                 <div>
                     <label htmlFor="estimatedTime">Estimated Time</label>
-                    <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime}/>
+                    <input ref={estimatedTime} id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime}/>
 
                     <label htmlFor="materialsNeeded">Materials Needed</label>
                     <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded} onChange={(event) => setMaterials(event.target.value) }></textarea>
