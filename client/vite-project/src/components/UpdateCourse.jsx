@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
+import ValidationErrors from "./ValidationErrors"
+
 const UpdateCourse = () => {
   //get course id from params
   const { id } = useParams();
@@ -86,8 +88,9 @@ const UpdateCourse = () => {
         } else if (response.status === 401) {
           console.log("access denied");
         } else if (response.status === 400) {
-          console.log("Bad request. Display validation errors");
+          
           const data = await response.json();
+          //set errors state with errors
           setErrors(data.errors);
         } else {
           throw new Error("failed to update course");
@@ -112,13 +115,7 @@ const UpdateCourse = () => {
           <h2>Update Course</h2>
           {/* check for errors and display validation errors */}
           {errors ? (
-            <div className="validation--errors">
-              <ul>
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </div>
+            <ValidationErrors errors={errors}/>
           ) : null}
 
           <form onSubmit={handleSubmit}>

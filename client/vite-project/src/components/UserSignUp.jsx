@@ -2,6 +2,7 @@ import React, { useRef, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 //import user authentication context
 import { UserContext } from "../context/UserContext";
+import ValidationErrors from "./ValidationErrors";
 
 const UserSignUp = () => {
   const navigate = useNavigate();
@@ -83,13 +84,7 @@ const UserSignUp = () => {
         <h2>Sign Up</h2>
         {/* check for errors and display errors */}
         {errors ? (
-          <div className="validation--errors">
-            <ul>
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
+          <ValidationErrors errors />
         ) : null}
         <form onSubmit={handleSubmit}>
           <label htmlFor="firstName">First Name</label>
