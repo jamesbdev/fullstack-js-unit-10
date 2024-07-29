@@ -35,7 +35,6 @@ const CourseDetail = (props) => {
             <h2>Loading...</h2>
         );
     } else {
-      console.log("course details", courseDetails);
       //assign course data to variables
       const { description, materialsNeeded, author, estimatedTime } = courseDetails[0];
     

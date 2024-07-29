@@ -19,7 +19,8 @@ const CreateCourse = (props) => {
     //prevent form submission
     event.preventDefault();
 
-    //authenticated user credentials
+    if (authUser) {
+      //authenticated user credentials
     const userEmail = authUser.user.emailAddress;
     const userPassword = authUser.user.password;
 
@@ -61,6 +62,9 @@ const CreateCourse = (props) => {
     } catch (error) {
       console.log("There was an error creating a course", error);
     }
+    }
+
+    
   };
 
   //redirect to homepage
