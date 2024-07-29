@@ -1,6 +1,7 @@
 import React, { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import ValidationErrors from "./ValidationErrors";
 
 const CreateCourse = (props) => {
   //get logged in user from context
@@ -79,15 +80,7 @@ const CreateCourse = (props) => {
           <h2>Create Course</h2>
           {/* -check for errors, if errors display errors */}
           {errors ? (
-            <div className="validation--errors">
-              <h3>Validation Errors</h3>
-              <ul>
-                {/* loop through errors */}
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </div>
+          <ValidationErrors errors={errors}/>
           ) : null}
 
           <form onSubmit={handleSubmit}>
