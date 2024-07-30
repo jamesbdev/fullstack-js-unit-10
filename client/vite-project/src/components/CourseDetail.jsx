@@ -7,11 +7,12 @@ import { UserContext } from "../context/UserContext";
 const CourseDetail = (props) => {
   const { id } = useParams();
   const [courseDetails, setCourseDetails] = useState(null);
+  //get authenticated user from context
   const { authUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-
   //get data from API
+  // sets the courseDetails state to the course data
   const getCourseInfo = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/courses/${id}`);
@@ -23,10 +24,11 @@ const CourseDetail = (props) => {
       console.log("Error when fetching course details", error);
     }
   };
-  //apply useEffect hook to fetch data
 
+  //makes fetch request to DELETE current course
   const deleteHandler = async (event) => {
     event.preventDefault();
+
     const { user } = authUser;
     const userName = user.emailAddress;
     const userPassword = user.password;
@@ -46,7 +48,7 @@ const CourseDetail = (props) => {
         `http://localhost:5000/api/courses/${id}`,
         fetchOptions
       );
- 
+
       if (response.status === 204) {
         console.log("Course was deleted");
         //navigate to courses
@@ -65,19 +67,29 @@ const CourseDetail = (props) => {
   useEffect(() => {
     getCourseInfo();
   }, [id]);
+
   //Check if courseDetails exists
   if (!courseDetails) {
     return <h2>Loading...</h2>;
   } else {
     //assign course data to variables
-    const { description, materialsNeeded, author, estimatedTime, title } = courseDetails[0];
+    const { description, materialsNeeded, author, estimatedTime, title } =
+      courseDetails[0];
 
     const userName =
       courseDetails[0].user.firstName + " " + courseDetails[0].user.lastName;
+
+
+
     return (
       <>
         <div className="actions--bar">
           <div className="wrap">
+            {/* - check authenticated user id 
+            - if the user id is same as the course's user ID 
+              - show buttons 
+            - else hide buttons */}
+
             <Link className="button" to={`/courses/${id}/update`}>
               Update Course
             </Link>
@@ -88,6 +100,7 @@ const CourseDetail = (props) => {
             >
               Delete Course
             </Link>
+
             <Link className="button button-secondary" to="/">
               Return to List
             </Link>

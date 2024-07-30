@@ -31,22 +31,21 @@ function App() {
         <Route
           exact
           path="/courses/create"
-          element={
-            <PrivateRoute>
-              <CreateCourse />
-            </PrivateRoute>
-          }
+          element={<PrivateRoute />}
         >
-          
+          <Route index element={<CreateCourse />}>
+
+          </Route>
+
         </Route>
         <Route
           path="/courses/:id/update"
-          element={
-            <PrivateRoute>
-              <UpdateCourse />
-            </PrivateRoute>
-          }
-        ></Route>
+          element={<PrivateRoute />}>
+          <Route index element={<UpdateCourse />}>
+          
+          </Route>
+
+        </Route>
 
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
