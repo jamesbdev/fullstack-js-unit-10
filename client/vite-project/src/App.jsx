@@ -10,6 +10,7 @@ import UserSignUp from "./components/UserSignUp";
 import Error from "./components/Error";
 import { UserContext } from "./context/UserContext";
 import CreateCourse from "./components/CreateCourse";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const { id } = useParams();
@@ -22,11 +23,31 @@ function App() {
       <Routes>
         <Route path="/" element={<Courses />}></Route>
         <Route path="/courses/:id" element={<CourseDetail />}></Route>
-        <Route path="/courses/:id/update" element={<UpdateCourse />}></Route>
+
         <Route path="/sign-up" element={<UserSignUp />}></Route>
         <Route path="/sign-in" element={<UserSignIn />}></Route>
         <Route path="/error" element={<Error />}></Route>
-        <Route exact path="/courses/create" element={<CreateCourse />}></Route>
+
+        <Route
+          exact
+          path="/courses/create"
+          element={
+            <PrivateRoute>
+              <CreateCourse />
+            </PrivateRoute>
+          }
+        >
+          
+        </Route>
+        <Route
+          path="/courses/:id/update"
+          element={
+            <PrivateRoute>
+              <UpdateCourse />
+            </PrivateRoute>
+          }
+        ></Route>
+
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </>

@@ -158,9 +158,9 @@ label {
 input, textarea {
     display: block;
     width: 100%;
-    color: #332a40;
+    color: #1bca6d;
     border-radius: .5rem;
-    border: 1px solid #8c789b;
+    border: 1px solid #a5e9aa;
     padding: .5rem;
     margin-bottom: 1rem;
     font-family: 'Work Sans', sans-serif;
@@ -204,7 +204,7 @@ textarea {
 input:focus, button:focus, .button:focus, textarea:focus {
     border: none;
     border-radius: 0;
-    outline: 2px solid #332a40;
+    outline: 2px solid #98e19d;
 }
 
 @media screen and (min-width: 600px) {
