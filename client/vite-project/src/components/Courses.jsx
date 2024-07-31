@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { api } from "../utils/apiHelper";
+
 
 
 /* index page component 
@@ -9,7 +9,7 @@ import { api } from "../utils/apiHelper";
  - Shows button to create a course
 */
 
-const Courses = (props) => {
+const Courses = () => {
   const [courses, setCourses] = useState([]);
 
   //get data to show courses

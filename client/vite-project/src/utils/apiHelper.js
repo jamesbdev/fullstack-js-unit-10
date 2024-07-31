@@ -24,12 +24,3 @@ export const api = async (path, method = "GET", body = null, credentials = null)
   return fetch(url, options);
 };
 
-/* GET COURSES */
-
-/* GET COURSE DETAIL */
-
-/* CREATE COURSE */
-
-/* UPDATE COURSE */
-
-/* DELETE COURSE */

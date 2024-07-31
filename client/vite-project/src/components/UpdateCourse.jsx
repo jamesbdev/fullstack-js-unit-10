@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
@@ -7,6 +7,7 @@ import ValidationErrors from "./ValidationErrors"
 const UpdateCourse = () => {
   //get course id from params
   const { id } = useParams();
+  console.log("id", id);
   const navigate = useNavigate();
   //store authenticated user from context
   const { authUser } = useContext(UserContext);
@@ -19,10 +20,15 @@ const UpdateCourse = () => {
   const [courseDesc, setCourseDesc] = useState("");
   const [materialsNeeded, setMaterials] = useState("");
 
-  
+
   //get values from form
   const title = useRef(null);
   const estimatedTime = useRef(null);
+
+
+
+  //using hook to update view with course data
+  useEffect(() => {
 
   //make GET request to /api/courses/:id to get data from the course being updated
   const getCourseData = async () => {
@@ -31,18 +37,13 @@ const UpdateCourse = () => {
       const data = await response.json();
       //set course date to course object
       setCourse(data[0]);
-      //set state for materials needed
       setMaterials(data[0].materialsNeeded);
-      //set state for course description
       setCourseDesc(data[0].description);
-      //console.log("course", course);
+
     } catch (error) {
       console.log("there was an error fetching the course data", error);
     }
   };
-
-  //using hook to update view with course data
-  useEffect(() => {
     //GET request
     getCourseData();
   }, [id]);

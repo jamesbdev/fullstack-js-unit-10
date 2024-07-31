@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { api } from "../utils/apiHelper";
+
 import { UserContext } from "../context/UserContext";
 
-const CourseDetail = (props) => {
+const CourseDetail = () => {
   const { id } = useParams();
   //set a state for the course's data
   const [courseDetails, setCourseDetails] = useState(null);
@@ -13,18 +13,7 @@ const CourseDetail = (props) => {
   const navigate = useNavigate();
 
 
-  //GET request to the current course data from API
-  // sets the courseDetails state to the course data
-  const getCourseInfo = async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/courses/${id}`);
-      const data = await response.json();
-      //update the course state
-      setCourseDetails(data);
-    } catch (error) {
-      console.log("Error when fetching course details", error);
-    }
-  };
+
 
   //contains a fetch request to DELETE the current course
   const deleteHandler = async (event) => {
@@ -35,6 +24,7 @@ const CourseDetail = (props) => {
     const userPassword = user.password;
 
     const encodedCredentials = btoa(`${userName}:${userPassword}`);
+
     //make DELETE request to api
     const fetchOptions = {
       method: "DELETE",
@@ -42,7 +32,7 @@ const CourseDetail = (props) => {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Basic ${encodedCredentials}`,
       },
-    };
+    }; 
 
     try {
       const response = await fetch(
@@ -66,6 +56,19 @@ const CourseDetail = (props) => {
     }
   };
   useEffect(() => {
+
+      //GET request to the current course data from API
+  // sets the courseDetails state to the course data
+  const getCourseInfo = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/courses/${id}`);
+      const data = await response.json();
+      //update the course state
+      setCourseDetails(data);
+    } catch (error) {
+      console.log("Error when fetching course details", error);
+    }
+  };
     getCourseInfo();
   }, [id]);
 

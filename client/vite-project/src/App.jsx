@@ -2,20 +2,15 @@ import Header from "./components/Header";
 import Courses from "./components/Courses";
 import CourseDetail from "./components/CourseDetail";
 import UpdateCourse from "./components/UpdateCourse";
-import { Routes, Route, useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import Error from "./components/Error";
-import { UserContext } from "./context/UserContext";
 import CreateCourse from "./components/CreateCourse";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  const { id } = useParams();
-  const [user, setUser] = useState(null);
-
   return (
     <>
       <Header />

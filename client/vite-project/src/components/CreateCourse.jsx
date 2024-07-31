@@ -1,9 +1,9 @@
-import React, { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import ValidationErrors from "./ValidationErrors";
 
-const CreateCourse = (props) => {
+const CreateCourse = () => {
   //get logged in user from context
   const { authUser } = useContext(UserContext);
   //reference to inputs to get input value

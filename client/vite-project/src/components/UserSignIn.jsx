@@ -3,8 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import  { UserContext } from "../context/UserContext";
 
 
-const UserSignIn = (credentials) => {
-  //get context from UserContext
+//calls the sign in function from context
+//passes the credentials 
+const UserSignIn = () => {
+
+  //get sign in function from context
   const { actions } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -12,10 +15,8 @@ const UserSignIn = (credentials) => {
   const username = useRef(null);
   const password = useRef(null);
 
-  //authenticated user state
-  const [authUser, setAuthUser] = useState(null);
-  const [errors, setErrors] = useState(null);
 
+  //fetches a User to authenticate, using the sign-in method from Context
   const handleSubmit = async (event) => {
     //prevent form submitting
     event.preventDefault();
@@ -25,17 +26,8 @@ const UserSignIn = (credentials) => {
       password: password.current.value,
     };
 
-    const encodedCredentials = btoa(
-      `${credentials.username}:${credentials.password}`
-    );
 
-    const fetchOptions = {
-      method: "GET",
-      headers: {
-        Authorization: `Basic ${encodedCredentials}`,
-      },
-    };
-
+    //log in fetch request (GET)
     try {
       const user = await actions.signIn(credentials);
       if (user) {
@@ -52,6 +44,7 @@ const UserSignIn = (credentials) => {
     }
   };
 
+  //cancel and go back to homepage
   const handleCancel = (event) => {
     //prevent form from submitting
     event.preventDefault;
@@ -81,7 +74,7 @@ const UserSignIn = (credentials) => {
           </button>
         </form>
         <p>
-          Don't have a user account? Click here to{" "}
+          Don &apos t have a user account? Click here to{" "}
           <Link to="/sign-up">sign up</Link>!
         </p>
       </div>
