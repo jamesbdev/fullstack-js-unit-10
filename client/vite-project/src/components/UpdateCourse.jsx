@@ -15,9 +15,11 @@ const UpdateCourse = () => {
 
   //course state
   const [course, setCourse] = useState(null);
+  //set state for textarea 
   const [courseDesc, setCourseDesc] = useState("");
   const [materialsNeeded, setMaterials] = useState("");
 
+  
   //get values from form
   const title = useRef(null);
   const estimatedTime = useRef(null);
@@ -157,7 +159,7 @@ const UpdateCourse = () => {
                 <textarea
                   id="materialsNeeded"
                   name="materialsNeeded"
-                  value={materialsNeeded}
+                  value={materialsNeeded || ""}
                   onChange={(event) => setMaterials(event.target.value)}
                 ></textarea>
               </div>
