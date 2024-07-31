@@ -15,8 +15,8 @@ const UpdateCourse = () => {
 
   //course state
   const [course, setCourse] = useState(null);
-  const [courseDesc, setCourseDesc] = useState(null);
-  const [materialsNeeded, setMaterials] = useState(null);
+  const [courseDesc, setCourseDesc] = useState("");
+  const [materialsNeeded, setMaterials] = useState("");
 
   //get values from form
   const title = useRef(null);
@@ -48,8 +48,6 @@ const UpdateCourse = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     //pass credentials for authorization
-
-    console.log("authUser", authUser);
 
     //store authenticated user credentials
     if (authUser) {
