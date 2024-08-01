@@ -1,4 +1,5 @@
-import React from "react";
+
+import PropTypes from 'prop-types';
 
 //shows a list of validation errors
 const ValidationErrors = (props) => {
@@ -14,5 +15,9 @@ const ValidationErrors = (props) => {
     </div>
   );
 };
+
+ValidationErrors.prototype = {
+  errors: PropTypes.object,
+}
 
 export default ValidationErrors;

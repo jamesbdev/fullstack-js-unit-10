@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import PropTypes from 'prop-types';
 
 //create user context for authentication
 const UserContext = createContext(null);
@@ -57,6 +58,10 @@ const UserProvider = ({children}) => {
             {children}
         </UserContext.Provider>
     )
+}
+
+UserProvider.prototype = {
+  children: PropTypes.object,
 }
 
 export { UserProvider, UserContext };
