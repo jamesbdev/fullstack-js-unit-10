@@ -6,9 +6,11 @@ import { Routes, Route } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
-import Error from "./components/Error";
 import CreateCourse from "./components/CreateCourse";
 import PrivateRoute from "./components/PrivateRoute";
+import UnhandledError from "./components/UnhandledError";
+import Forbidden from "./components/Forbidden";
+
 
 function App() {
   return (
@@ -21,7 +23,9 @@ function App() {
 
         <Route path="/sign-up" element={<UserSignUp />}></Route>
         <Route path="/sign-in" element={<UserSignIn />}></Route>
-        <Route path="/error" element={<Error />}></Route>
+        <Route path="/error" element={<UnhandledError/>}></Route>
+        <Route path="/notfound" element={<NotFound />}></Route>
+        <Route path="/forbidden" element={<Forbidden />}></Route>
 
         <Route
           exact
