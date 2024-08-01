@@ -13,8 +13,6 @@ const CourseDetail = () => {
   const navigate = useNavigate();
 
 
-
-
   //contains a fetch request to DELETE the current course
   const deleteHandler = async (event) => {
     event.preventDefault();
@@ -47,7 +45,7 @@ const CourseDetail = () => {
       } else if (response.status === 400) {
         console.log("bad request");
       } else if (response.status === 401) {
-        console.log("user not authorized");
+        navigate("/forbidden");
       } else {
         throw new Error("failed to delete the course");
       }
@@ -57,20 +55,26 @@ const CourseDetail = () => {
   };
   useEffect(() => {
 
-      //GET request to the current course data from API
-  // sets the courseDetails state to the course data
+  //GET request to the current course data from API
   const getCourseInfo = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/courses/${id}`);
       const data = await response.json();
       //update the course state
-      setCourseDetails(data);
+      if (response.status === 200 || response.status === 204) {
+        setCourseDetails(data);
+      } else if (response.status === 401) {
+        navigate("/forbidden");
+      } else if (response.status === 404) {
+        navigate("/notfound");
+      }
+   
     } catch (error) {
       console.log("Error when fetching course details", error);
     }
   };
     getCourseInfo();
-  }, [id]);
+  }, [id, navigate]);
 
   //Check if courseDetails exists
   if (!courseDetails) {

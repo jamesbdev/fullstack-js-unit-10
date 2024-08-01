@@ -7,7 +7,6 @@ import ValidationErrors from "./ValidationErrors"
 const UpdateCourse = () => {
   //get course id from params
   const { id } = useParams();
-  console.log("id", id);
   const navigate = useNavigate();
   //store authenticated user from context
   const { authUser } = useContext(UserContext);
@@ -36,17 +35,25 @@ const UpdateCourse = () => {
       const response = await fetch(`http://localhost:5000/api/courses/${id}`);
       const data = await response.json();
       //set course date to course object
-      setCourse(data[0]);
-      setMaterials(data[0].materialsNeeded);
-      setCourseDesc(data[0].description);
-
+      if (response.status === 200 || response.status === 204) {
+        setCourse(data[0]);
+        setMaterials(data[0].materialsNeeded);
+        setCourseDesc(data[0].description);
+      } else if (response.status === 401) {
+        navigate("/forbidden");
+      } else if (response.status === 404) {
+        navigate("/notfound");
+      } else {
+        navigate("/error");
+      }
+  
     } catch (error) {
       console.log("there was an error fetching the course data", error);
     }
   };
     //GET request
     getCourseData();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -87,7 +94,7 @@ const UpdateCourse = () => {
           //redirect to course details page
           navigate(`/courses/${id}`);
         } else if (response.status === 401) {
-          console.log("access denied");
+          navigate("/forbidden");
         } else if (response.status === 400) {
           
           const data = await response.json();
