@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { Outlet, useNavigate } from "react-router-dom";
 
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
     //access authorized user from context
     const { authUser } = useContext(UserContext);
     const navigate = useNavigate();

@@ -1,5 +1,5 @@
-import React, { useRef, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useRef, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 //import user authentication context
 import { UserContext } from "../context/UserContext";
 import ValidationErrors from "./ValidationErrors";
