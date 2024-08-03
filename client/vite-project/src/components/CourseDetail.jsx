@@ -46,6 +46,8 @@ const CourseDetail = () => {
         console.log("bad request");
       } else if (response.status === 401) {
         navigate("/forbidden");
+      } else if (response.status === 500) { 
+        navigate("/error");
       } else {
         throw new Error("failed to delete the course");
       }
@@ -67,6 +69,8 @@ const CourseDetail = () => {
         navigate("/forbidden");
       } else if (response.status === 404) {
         navigate("/notfound");
+      } else if (response.status === 500) { 
+        navigate("/error")
       }
    
     } catch (error) {

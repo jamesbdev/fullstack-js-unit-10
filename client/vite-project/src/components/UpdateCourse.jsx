@@ -100,6 +100,8 @@ const UpdateCourse = () => {
           const data = await response.json();
           //set errors state with errors
           setErrors(data.errors);
+        } else if (response.status === 500) { 
+          navigate("/error");
         } else {
           throw new Error("failed to update course");
         }
