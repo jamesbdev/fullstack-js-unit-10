@@ -63,6 +63,7 @@ const UserSignUp = () => {
         //set error state
         setErrors(data.errors);
       }  else if (response.status === 500) { 
+        //internal server error
         navigate("/error");
       } else {
         throw new Error();
