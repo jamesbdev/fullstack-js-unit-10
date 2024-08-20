@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { Outlet, useNavigate } from "react-router-dom";
 
-
+//higher order component for private routes
 const PrivateRoute = () => {
     //access authorized user from context
     const { authUser } = useContext(UserContext);

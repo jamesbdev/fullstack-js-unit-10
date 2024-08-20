@@ -1,6 +1,11 @@
 const Forbidden = () => {
     return(
-        <p>Sorry but you don &apos;t have access to this page</p>
+        <main>
+        <div className="wrap">
+            <h2>Forbidden</h2>
+            <p>Oh oh! You can&apos;t access this page.</p>
+        </div>
+    </main>
     )
 }
 
