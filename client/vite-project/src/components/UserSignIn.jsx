@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import  { UserContext } from "../context/UserContext";
 
@@ -14,6 +14,7 @@ const UserSignIn = () => {
   //ref to get credentials from form inputs
   const username = useRef(null);
   const password = useRef(null);
+  const [errors, setErrors] = useState(null);
 
 
   //fetches a User to authenticate, using the sign-in method from Context
@@ -74,12 +75,14 @@ const UserSignIn = () => {
           </button>
         </form>
         <p>
-          Don &apos t have a user account? Click here to{" "}
+          Don&apos;t have a user account? Click here to{" "}
           <Link to="/sign-up">sign up</Link>!
         </p>
       </div>
     </main>
   );
 };
+
+
 
 export default UserSignIn;

@@ -17,7 +17,7 @@ const ValidationErrors = (props) => {
 };
 
 ValidationErrors.prototype = {
-  errors: PropTypes.object,
+  errors: PropTypes.node,
 }
 
 export default ValidationErrors;
