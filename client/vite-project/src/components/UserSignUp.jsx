@@ -81,13 +81,14 @@ const UserSignUp = () => {
     navigate("/");
   };
 
+
   return (
     <main>
       <div className="form--centered">
         <h2>Sign Up</h2>
         {/* check for errors and display errors */}
         {errors ? (
-          <ValidationErrors errors />
+          <ValidationErrors errors={errors} />
         ) : null}
         <form onSubmit={handleSubmit}>
           <label htmlFor="firstName">First Name</label>
