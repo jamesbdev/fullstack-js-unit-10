@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
@@ -12,6 +12,18 @@ const UserProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
 
     //save user in cookies 
+
+    //check if user has already authenticated
+      //if yes set user state to authenticated user
+    useEffect(() => {
+      //retrieve local storage
+      const storedUser = localStorage.getItem('authUser');
+
+      if (storedUser) {
+        setAuthUser(JSON.parse(storedUser));
+      }
+
+    }, [])
 
 
     //sign in function to pass to UserSignIn component
@@ -36,12 +48,8 @@ const UserProvider = ({ children }) => {
         user.user.password = credentials.password;
         setAuthUser(user);
         //store credentials local storage
-        console.log("user", user);
-      
-        localStorage.setItem("username", user.user.emailAddress);
-        localStorage.setItem("password", encodedCredentials);
+        localStorage.setItem("authUser", JSON.stringify(user));
         
-        console.log(localStorage);
         return user;
       } else if (response.status === 401) {
         navigate("/forbidden");
@@ -57,7 +65,9 @@ const UserProvider = ({ children }) => {
     const signOut = () => {
         //remove authenticated user information from the global state
       setAuthUser(null);
-      //delete credentials from cookies
+      //delete credentials from localstorage
+      localStorage.clear();
+
 
     };
 
