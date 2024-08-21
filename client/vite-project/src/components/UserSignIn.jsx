@@ -1,5 +1,5 @@
-import { useContext, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import  { UserContext } from "../context/UserContext";
 
 
@@ -9,12 +9,20 @@ const UserSignIn = () => {
 
   //get sign in function from context
   const { actions } = useContext(UserContext);
-
+  const location = useLocation();
   const navigate = useNavigate();
   //ref to get credentials from form inputs
   const username = useRef(null);
   const password = useRef(null);
   const [errors, setErrors] = useState(null);
+  const [redirectTo, setRedirectTo] = useState("/");
+
+  useEffect( () => {
+    if (location.state?.from) {
+      setRedirectTo(location.state.from);
+    }
+  }, [location])
+
 
 
   //fetches a User to authenticate, using the sign-in method from Context
@@ -27,12 +35,13 @@ const UserSignIn = () => {
       password: password.current.value,
     };
 
-
+  
     //log in fetch request (GET)
     try {
       const user = await actions.signIn(credentials);
       if (user) {
-        navigate("/");
+        //redirect to stored location
+        navigate(redirectTo);
       } else {
         setErrors(["Sign in was unsuccessful"]);
       }
