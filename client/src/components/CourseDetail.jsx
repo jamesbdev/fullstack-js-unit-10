@@ -80,12 +80,13 @@ const CourseDetail = () => {
     getCourseInfo();
   }, [id, navigate]);
 
-  
+
   //Check if courseDetails exists
   if (!courseDetails) {
     return <h2>Loading...</h2>;
   } else if (courseDetails.length === 0) {
-    navigate("/notfound");
+    return <h2>Please check the course ID. Entered ID does not exist</h2>
+  
   } else {
     //assign course data to variables
     const { description, materialsNeeded, user, estimatedTime, title } = courseDetails[0];
