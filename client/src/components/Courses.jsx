@@ -23,6 +23,7 @@ const Courses = () => {
       }
     } catch (error) {
       console.log("there was an error getting the list of courses", error); 
+      //redirect to error page
       navigate("/error");
     }
   };
