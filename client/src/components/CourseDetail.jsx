@@ -53,6 +53,7 @@ const CourseDetail = () => {
       }
     } catch (error) {
       console.log("There was an issue when updating the course", error);
+     
     }
   };
   useEffect(() => {
@@ -75,6 +76,8 @@ const CourseDetail = () => {
    
     } catch (error) {
       console.log("Error when fetching course details", error);
+      //redirect to error page
+      navigate("/error");
     }
   };
     getCourseInfo();

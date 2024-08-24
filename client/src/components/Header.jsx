@@ -14,9 +14,6 @@ const Header = () => {
   }
 
 
-  //logged in user
-  console.log("logged in user:", authUser);
-
   return (
     <header>
       <div className="wrap header--flex">

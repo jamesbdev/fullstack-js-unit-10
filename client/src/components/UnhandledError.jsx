@@ -1,7 +1,10 @@
 
 const UnhandledError = () => {
     return(
-        <p>Sorry an unexpected error has occured.</p>
+        <div className="wrap">
+        <h2>Error</h2>
+        <p>Sorry! We just encountered an unexpected error.</p>
+      </div>
     )
 }
 

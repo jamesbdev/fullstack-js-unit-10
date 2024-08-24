@@ -18,26 +18,39 @@ const UpdateCourse = () => {
   //set state for textarea 
   const [courseDesc, setCourseDesc] = useState("");
   const [materialsNeeded, setMaterials] = useState("");
-
-
   //get values from form
   const title = useRef(null);
   const estimatedTime = useRef(null);
+  //get value of authorized user's ID
+  const authUserId = authUser.user.id;
+
 
 
 
   //using hook to update view with course data
   useEffect(() => {
 
-  //make GET request to /api/courses/:id to get data from the course being updated
+  //makes GET request to /api/courses/:id to get data from the course being updated
   const getCourseData = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/courses/${id}`);
       const data = await response.json();
-      //set course date to course object
+      const courseUserId = data[0].userId;
+     
       if (response.status === 200 || response.status === 204) {
-        setCourse(data[0]);
-        setMaterials(data[0].materialsNeeded);
+        //check if the response's data exists
+        //if not redirect to not found page
+        if (!data || data.length == 0) {
+          navigate("/not-found");
+        } else if (courseUserId !== authUserId) {
+          //checking if the course's user id matches the logged in user id
+          //if not redirect to forbidden page
+          navigate("/forbidden");
+          
+        } else {
+          setCourse(data[0]);
+          setMaterials(data[0].materialsNeeded);
+        }
         setCourseDesc(data[0].description);
       } else if (response.status === 401) {
         navigate("/forbidden");

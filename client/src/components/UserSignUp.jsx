@@ -1,5 +1,5 @@
 import { useRef, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 //import user authentication context
 import { UserContext } from "../context/UserContext";
 import ValidationErrors from "./ValidationErrors";
@@ -58,11 +58,15 @@ const UserSignUp = () => {
         );
         //sign in user
         actions.signIn(credentials);
+        navigate("/");
       } else if (response.status === 400) {
         const data = await response.json();
         //set error state
         setErrors(data.errors);
-      }  else if (response.status === 500) { 
+      }  else if (response.status === 401) {
+        console.log("user is unauthorized");
+        navigate("/forbidden");
+      } else if (response.status === 500) { 
         //internal server error
         navigate("/error");
       } else {
@@ -113,7 +117,8 @@ const UserSignUp = () => {
         </form>
         <p>
           Already have a user account? Click here to{" "}
-          <a href="sign-in.html">sign in</a>!
+         <Link to="/sign-in">sign in</Link>
+      
         </p>
       </div>
     </main>

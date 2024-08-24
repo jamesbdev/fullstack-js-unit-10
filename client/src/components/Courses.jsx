@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-
 
 /* index page component 
  - Shows a list of courses
@@ -11,16 +9,21 @@ import { useState } from "react";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   //get data to show courses
   const fetchCourses = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/courses");
       const courseData = await response.json();
-      //change state for courses array
-      setCourses(courseData);
+
+      if (response.status === 200) {
+        //change state for courses array
+        setCourses(courseData);
+      }
     } catch (error) {
-      console.log("there was an error getting the list of courses", error);
+      console.log("there was an error getting the list of courses", error); 
+      navigate("/error");
     }
   };
 
