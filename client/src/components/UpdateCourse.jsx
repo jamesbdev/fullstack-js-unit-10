@@ -56,12 +56,13 @@ const UpdateCourse = () => {
         navigate("/forbidden");
       } else if (response.status === 404) {
         navigate("/notfound");
-      } else {
+      } else if (response.status === 500){
         navigate("/error");
       }
   
     } catch (error) {
       console.log("there was an error fetching the course data", error);
+      navigate("/error");
     }
   };
     //GET request
@@ -96,7 +97,7 @@ const UpdateCourse = () => {
         }),
       };
 
-      //make PUT request to update the course
+      //makes a PUT request to update the course
       try {
         const response = await fetch(
           `http://localhost:5000/api/courses/${id}`,
@@ -109,7 +110,6 @@ const UpdateCourse = () => {
         } else if (response.status === 401) {
           navigate("/forbidden");
         } else if (response.status === 400) {
-          
           const data = await response.json();
           //set errors state with errors
           setErrors(data.errors);
@@ -129,8 +129,9 @@ const UpdateCourse = () => {
     navigate(`/courses/${id}`);
   };
   //check if course exists before showing mark up
+
   if (!course) {
-    return <p>loading course...</p>;
+   return <p>loading course...</p>;
   } else {
     return (
       <main>
@@ -197,7 +198,7 @@ const UpdateCourse = () => {
         </div>
       </main>
     );
-  }
+ }
 };
 
 export default UpdateCourse;

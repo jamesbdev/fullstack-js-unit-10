@@ -53,6 +53,7 @@ const CourseDetail = () => {
       }
     } catch (error) {
       console.log("There was an issue when updating the course", error);
+      navigate("/error");
      
     }
   };
