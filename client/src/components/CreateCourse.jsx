@@ -58,12 +58,13 @@ const CreateCourse = () => {
         //set error state
         setErrors(data.errors);
       } else if (response.status === 500) { 
-        navigate("/error")
+        navigate("/error");
       } else {
         throw new Error();
       }
     } catch (error) {
       console.log("There was an error creating a course", error);
+      navigate("/error");
     }
     }
 
@@ -123,7 +124,8 @@ const CreateCourse = () => {
                   ref={materialsNeeded}
                   id="materialsNeeded"
                   name="materialsNeeded"
-                ></textarea>
+                >
+                </textarea>
               </div>
             </div>
             <button className="button" type="submit">
