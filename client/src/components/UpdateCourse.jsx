@@ -40,8 +40,8 @@ const UpdateCourse = () => {
       if (response.status === 200 || response.status === 204) {
         //check if the response's data exists
         //if not redirect to not found page
-        if (!data || data.length == 0) {
-          navigate("/not-found");
+        if (!data || data.length === 0) {
+          navigate("/notfound");
         } else if (courseUserId !== authUserId) {
           //checking if the course's user id matches the logged in user id
           //if not redirect to forbidden page
@@ -62,7 +62,7 @@ const UpdateCourse = () => {
   
     } catch (error) {
       console.log("there was an error fetching the course data", error);
-      navigate("/error");
+      navigate("/notfound");
     }
   };
     //GET request
@@ -120,6 +120,7 @@ const UpdateCourse = () => {
         }
       } catch (error) {
         console.log("There was an error when updating the course", error);
+        navigate("/error");
       }
     }
   };
@@ -131,7 +132,9 @@ const UpdateCourse = () => {
   //check if course exists before showing mark up
 
   if (!course) {
+  console.log("course", course);
    return <p>loading course...</p>;
+   
   } else {
     return (
       <main>
