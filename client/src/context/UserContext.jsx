@@ -10,8 +10,8 @@ const UserProvider = ({ children }) => {
     const navigate = useNavigate();
     //state of authorized user
     const [authUser, setAuthUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    //save user in cookies 
 
     //check if user has already authenticated
       //if yes set user state to authenticated user
@@ -23,16 +23,16 @@ const UserProvider = ({ children }) => {
         setAuthUser(JSON.parse(storedUser));
       }
 
+      setIsLoading(false);
+      
     }, [])
 
 
     //sign in function to pass to UserSignIn component
     const signIn = async (credentials) => {
-
         const encodedCredentials = btoa(
             `${credentials.username}:${credentials.password}`
           );
-      
       
           const fetchOptions = {
             method: "GET",
@@ -67,13 +67,11 @@ const UserProvider = ({ children }) => {
       setAuthUser(null);
       //delete credentials from localstorage
       localStorage.clear();
-
-
     };
 
     return (
         <UserContext.Provider value={{
-            authUser,
+            authUser, isLoading,
             actions: {
                 signIn,
                 signOut
