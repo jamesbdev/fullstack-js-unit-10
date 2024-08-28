@@ -77,22 +77,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       set(value) {
+        if (value) {
           const hashedPassword = bcrypt.hashSync(value, 10);
           this.setDataValue("password", hashedPassword);
-        
+        }
       },
     }
   }, {
     sequelize,
     modelName: 'User',
-    hooks: {
-      beforeCreate: async (user) => {
-        if(user.password) {
-          const salt = await bcrypt.genSalt(10);
-          user.password = await bcrypt.hash(user.password, salt);
-        }
-      }
-    }
   });
   return User;
 };
